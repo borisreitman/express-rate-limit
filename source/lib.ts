@@ -94,6 +94,7 @@ type Configuration = {
 	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 	message: any | ValueDeterminingMiddleware<any>
 	statusCode: number
+	statusMessage: string
 	legacyHeaders: boolean
 	standardHeaders: boolean
 	requestPropertyName: string
@@ -126,6 +127,7 @@ const parseOptions = (passedOptions: Partial<Options>): Configuration => {
 		windowMs: 60 * 1000,
 		max: 5,
 		message: 'Too many requests, please try again later.',
+		statusMessage: 'Too many requests, please try again later.',
 		statusCode: 429,
 		legacyHeaders: passedOptions.headers ?? true,
 		standardHeaders: passedOptions.draft_polli_ratelimit_headers ?? false,
@@ -152,6 +154,7 @@ const parseOptions = (passedOptions: Partial<Options>): Configuration => {
 		): Promise<void> {
 			// Set the response status code
 			response.status(config.statusCode)
+			response.statusMessage = config.statusMessage
 			// Call the `message` if it is a function.
 			const message: unknown =
 				typeof config.message === 'function'
