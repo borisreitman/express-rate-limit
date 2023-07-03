@@ -195,6 +195,14 @@ export type Options = {
 	readonly message: any | ValueDeterminingMiddleware<any>
 
 	/**
+	 * The response status header text to send back when a client is rate limited.
+	 *
+	 * Defaults to `'Too many requests, please try again later.'`
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+	readonly statusMessage: any | ValueDeterminingMiddleware<string>
+
+	/**
 	 * The HTTP status code to send back when a client is rate limited.
 	 *
 	 * Defaults to `HTTP 429 Too Many Requests` (RFC 6585).
